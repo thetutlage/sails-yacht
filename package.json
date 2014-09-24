@@ -1,0 +1,30 @@
+{
+  "name": "sails-yacht",
+  "version": "0.0.0",
+  "description": "Sails yacht is flavoured layer on top of sails models, as it helps you in setting up key features on models, like custom validations and defining update only fields",
+  "main": "yacht.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thetutlage/sails-yacht.git"
+  },
+  "keywords": [
+    "sailsjs",
+    "nodejs-framework",
+    "custom",
+    "sailsjs",
+    "model",
+    "messages"
+  ],
+  "author": "amanvirk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thetutlage/sails-yacht/issues"
+  },
+  "homepage": "https://github.com/thetutlage/sails-yacht",
+  "dependencies": {
+    "underscore": "^1.7.0"
+  }
+}
