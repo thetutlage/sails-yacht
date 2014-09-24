@@ -56,6 +56,22 @@ function validate(Model,Err,callback){
 	});
 }
 
+function setUpdateFields(Model,values,callback){
+	var __fields = Model.updateFields;
+	var intersect = [];
+	var __size = _.size(values);
+	var i = 0;
+	_.each(values,function(data,keys){
+		i++;
+		if(!_.contains(__fields,keys)){
+			delete values[keys];
+		}
+		if(i == __size){
+			callback(values);
+		}
+	});
+}
+
 function validationMessages(){
 	var rd = {};
 	if(globals.showCount){
@@ -76,4 +92,5 @@ function validationMessages(){
 yacht.validator = validator;
 validator.validate = validate;
 validator.__globals = __globals;
+validator.setUpdateFields = setUpdateFields;
 

@@ -34,6 +34,14 @@ var validationMessages = {
 	}
  };
 
-validator.validate(validationMessages,errMessage,function(messages){
-	console.log(JSON.stringify(messages));
+// validator.validate(validationMessages,errMessage,function(messages){
+// 	console.log(JSON.stringify(messages));
+// });
+
+var User = {
+    updateFields: ['displayName','isdisplayName','profile_pic','phone_no','sound_cloud_id','sound_cloud_username','sound_cloud_token','sound_cloud_refresh_token','account_status'],
+};
+var f = { username: '996806500', phone_no: '996806500','profile_pic': 'Wow','random':'isThere'};
+validator.setUpdateFields(User,f,function(fields){
+    console.log(fields);
 });
