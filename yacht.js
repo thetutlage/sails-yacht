@@ -2,7 +2,7 @@ var _ = require("underscore");
 
 var yacht = module.exports;
 var validator = {};
-
+var orm = {};
 var globals = {};
 globals.showCount = false;
 globals.listFields = false;
@@ -90,7 +90,8 @@ function validationMessages(){
 }
 
 yacht.validator = validator;
+yacht.orm = orm;
 validator.validate = validate;
 validator.__globals = __globals;
-validator.setUpdateFields = setUpdateFields;
+orm.setUpdateFields = setUpdateFields;
 
