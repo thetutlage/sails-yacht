@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/thetutlage/sails-yacht",
   "dependencies": {
-    "node-promise": "^0.5.10"
+    "underscore": "^1.7.0"
   }
 }
