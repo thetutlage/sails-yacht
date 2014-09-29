@@ -123,10 +123,13 @@ var orm = {
 		fields: [],
 		past: [],
 		present: [],
-		future: []
+		future: [],
+		history: {},
+		ignore: ['inspect','createdAt','updatedAt']
 	},
 
 	setUpdateFields: function(Model,values,callback){
+		var obj = this;
 		obj.__helpers.fields = Model.updateFields;
 		var size = _.size(values);
 		var i = 0;
@@ -141,19 +144,52 @@ var orm = {
 		});
 	},
 
-	initRevision: function(Model,values,callback){
-		this.__helpers.past = values;
+	initRevision: function(Model,item,callback){
+		var obj = this;
+		Model.findById(item).exec(function(err,d){
+			if(!err){
+				obj.__helpers.past = d[0];
+			}
+			callback();
+		});
 	},
-	createRevision: function(Model,values){
+	createRevision: function(Model,Revision,values){
 		var obj = this;
 		obj.__helpers.present = values;
 		_.each(obj.__helpers.past,function(v,k){
-			if(obj.__helpers.past[k] !== obj.__helpers.present[k]){
-				obj.__helpers.future[k] = v;
+			if(obj.__helpers.past[k] != obj.__helpers.present[k] && !_.contains(obj.__helpers.ignore,k)){
+				obj.__helpers.future.push({
+					revisionable_type: Model.adapter.collection,
+					revisionable_id: values.id,
+					user_id: 1,
+					key_field: k,
+					old_value: v,
+					new_value: obj.__helpers.present[k]
+				});
 			}
 		});
-		console.log(obj.__helpers.future);
+		obj.insertRevision(Revision);
+	},
+	insertRevision: function(Revision){
+		var obj = this;
+		Revision.create(obj.__helpers.future,function(err,values){
+		});
+	},
+	revisionHistory: function(object,callback){
+		var obj = this;
+		x = 0;
+		_.each(object,function(values,keys){
+			x++;
+			if(typeof(obj.__helpers.history[values.key_field]) == 'undefined'){
+				obj.__helpers.history[values.key_field] = [];
+			}
+			obj.__helpers.history[values.key_field].push(values);
+			if(x == _.size(object)){
+				callback(obj.__helpers.history);
+			}
+		});
 	}
+
 }
 
 var yacht = module.exports;
